@@ -81,7 +81,7 @@ public abstract class BaseValueVector implements ValueVector {
     this.validityBuffer.writerIndex(index);
   }
 
-  public void allocateValidityBuffer(final long size) {
+  final public void allocateValidityBuffer(final long size) {
     final int curSize = (int) size;
     validityBuffer = allocator.buffer(curSize);
     validityBuffer.readerIndex(0);
@@ -201,6 +201,10 @@ public abstract class BaseValueVector implements ValueVector {
     return validityBuffer;
   }
 
+  final public int getValidityBufferValueCapacity() {
+    return (int) (validityBuffer.capacity() * 8L);
+  }
+
   @Override
   public String toString() {
     return super.toString() + "[name = " + name + ", ...]";
@@ -274,7 +278,7 @@ public abstract class BaseValueVector implements ValueVector {
    * @return true if element at given index is null, false otherwise
    */
   @Override
-  final public boolean isNull(int index) {
+  public boolean isNull(int index) {
     return (isSet(index) == 0);
   }
 
@@ -298,7 +302,8 @@ public abstract class BaseValueVector implements ValueVector {
    */
   @Override
   final public int getNullCount() {
-    return BitVectorHelper.getNullCount(validityBuffer, valueCount);
+    return -1;
+    //return BitVectorHelper.getNullCount(validityBuffer, valueCount);
   }
 
   final public void markValidityBitToOne(int index){
