@@ -492,7 +492,7 @@ public class StructVector extends NonNullableStructVector implements FieldVector
       /* realloc the inner buffers if needed */
       reallocValidityBuffer();
     }
-    markValidityBitToOne(index);
+    BitVectorHelper.setValidityBitToOne(validityBuffer, index);
   }
 
   public void setNull(int index) {
@@ -500,7 +500,7 @@ public class StructVector extends NonNullableStructVector implements FieldVector
       /* realloc the inner buffers if needed */
       reallocValidityBuffer();
     }
-    markValidityBitToZero(index);
+    BitVectorHelper.setValidityBit(validityBuffer, index, 0);
   }
 
   @Override
