@@ -262,7 +262,7 @@ public abstract class BaseValueVector implements ValueVector {
     this.validityBuffer = allocator.getEmpty();
   }
 
-  protected void resetValidity() {
+  protected void zeroOutValidity() {
     validityBuffer.setZero(0, validityBuffer.capacity());
   }
 

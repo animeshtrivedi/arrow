@@ -234,7 +234,7 @@ public abstract class BaseVariableWidthVector extends BaseValueVector
 
   /* zero out the validity buffer */
   private void initValidityBuffer() {
-    resetValidity();
+    zeroOutValidity();
     //validityBuffer.setZero(0, validityBuffer.capacity());
   }
 

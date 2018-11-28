@@ -510,7 +510,7 @@ public class ListVector extends BaseRepeatedValueVector implements FieldVector, 
   @Override
   public void reset() {
     super.reset();
-    resetValidity();
+    zeroOutValidity();
     lastSet = 0;
   }
 

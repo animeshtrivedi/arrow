@@ -187,7 +187,7 @@ public abstract class BaseFixedWidthVector extends BaseValueVector
    */
   @Override
   public void zeroVector() {
-    resetValidity();
+    zeroOutValidity();
     valueBuffer.setZero(0, valueBuffer.capacity());
   }
 
@@ -215,7 +215,7 @@ public abstract class BaseFixedWidthVector extends BaseValueVector
   @Override
   public void clear() {
     valueCount = 0;
-    resetValidity();//validityBuffer = releaseBuffer(validityBuffer);
+    releaseValidityBuffer();
     valueBuffer = releaseBuffer(valueBuffer);
   }
 
