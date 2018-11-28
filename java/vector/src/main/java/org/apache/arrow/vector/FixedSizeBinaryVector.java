@@ -186,7 +186,7 @@ public class FixedSizeBinaryVector extends BaseFixedWidthVector {
   public void set(int index, byte[] value) {
     assert index >= 0;
     assert byteWidth <= value.length;
-    BitVectorHelper.setValidityBitToOne(validityBuffer, index);
+    markValidityBitToOne(index);
     valueBuffer.setBytes(index * byteWidth, value, 0, byteWidth);
   }
 
@@ -217,7 +217,7 @@ public class FixedSizeBinaryVector extends BaseFixedWidthVector {
   public void set(int index, ArrowBuf buffer) {
     assert index >= 0;
     assert byteWidth <= buffer.capacity();
-    BitVectorHelper.setValidityBitToOne(validityBuffer, index);
+    markValidityBitToOne(index);
     valueBuffer.setBytes(index * byteWidth, buffer, 0, byteWidth);
   }
 

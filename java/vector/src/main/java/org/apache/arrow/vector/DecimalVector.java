@@ -192,7 +192,7 @@ public class DecimalVector extends BaseFixedWidthVector {
    * @param buffer   ArrowBuf containing decimal value.
    */
   public void set(int index, ArrowBuf buffer) {
-    BitVectorHelper.setValidityBitToOne(validityBuffer, index);
+    markValidityBitToOne(index);
     valueBuffer.setBytes(index * TYPE_WIDTH, buffer, 0, TYPE_WIDTH);
   }
 
@@ -212,7 +212,7 @@ public class DecimalVector extends BaseFixedWidthVector {
    * @param value array of bytes containing decimal in big endian byte order.
    */
   public void setBigEndian(int index, byte[] value) {
-    BitVectorHelper.setValidityBitToOne(validityBuffer, index);
+    markValidityBitToOne(index);
     final int length = value.length;
     int startIndex = index * TYPE_WIDTH;
     if (length == TYPE_WIDTH) {
@@ -259,7 +259,7 @@ public class DecimalVector extends BaseFixedWidthVector {
    * @param buffer   ArrowBuf containing decimal value.
    */
   public void set(int index, int start, ArrowBuf buffer) {
-    BitVectorHelper.setValidityBitToOne(validityBuffer, index);
+    markValidityBitToOne(index);
     valueBuffer.setBytes(index * TYPE_WIDTH, buffer, start, TYPE_WIDTH);
   }
 
@@ -270,7 +270,7 @@ public class DecimalVector extends BaseFixedWidthVector {
    * @param value   BigDecimal containing decimal value.
    */
   public void set(int index, BigDecimal value) {
-    BitVectorHelper.setValidityBitToOne(validityBuffer, index);
+    markValidityBitToOne(index);
     DecimalUtility.checkPrecisionAndScale(value, precision, scale);
     DecimalUtility.writeBigDecimalToArrowBuf(value, valueBuffer, index);
   }
@@ -287,7 +287,7 @@ public class DecimalVector extends BaseFixedWidthVector {
     if (holder.isSet < 0) {
       throw new IllegalArgumentException();
     } else if (holder.isSet > 0) {
-      BitVectorHelper.setValidityBitToOne(validityBuffer, index);
+      markValidityBitToOne(index);
       valueBuffer.setBytes(index * TYPE_WIDTH, holder.buffer, holder.start, TYPE_WIDTH);
     } else {
       BitVectorHelper.setValidityBit(validityBuffer, index, 0);
@@ -301,7 +301,7 @@ public class DecimalVector extends BaseFixedWidthVector {
    * @param holder  data holder for value of element
    */
   public void set(int index, DecimalHolder holder) {
-    BitVectorHelper.setValidityBitToOne(validityBuffer, index);
+    markValidityBitToOne(index);
     valueBuffer.setBytes(index * TYPE_WIDTH, holder.buffer, holder.start, TYPE_WIDTH);
   }
 

@@ -139,7 +139,7 @@ public class TimeStampMicroVector extends TimeStampVector {
     if (holder.isSet < 0) {
       throw new IllegalArgumentException();
     } else if (holder.isSet > 0) {
-      BitVectorHelper.setValidityBitToOne(validityBuffer, index);
+      markValidityBitToOne(index);
       setValue(index, holder.value);
     } else {
       BitVectorHelper.setValidityBit(validityBuffer, index, 0);
@@ -153,7 +153,7 @@ public class TimeStampMicroVector extends TimeStampVector {
    * @param holder  data holder for value of element
    */
   public void set(int index, TimeStampMicroHolder holder) {
-    BitVectorHelper.setValidityBitToOne(validityBuffer, index);
+    markValidityBitToOne(index);
     setValue(index, holder.value);
   }
 

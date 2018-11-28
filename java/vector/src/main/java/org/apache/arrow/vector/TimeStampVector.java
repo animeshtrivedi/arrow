@@ -107,7 +107,7 @@ public abstract class TimeStampVector extends BaseFixedWidthVector {
    * @param value   value of element
    */
   public void set(int index, long value) {
-    BitVectorHelper.setValidityBitToOne(validityBuffer, index);
+    markValidityBitToOne(index);
     setValue(index, value);
   }
 

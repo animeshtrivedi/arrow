@@ -174,7 +174,7 @@ public class Float8Vector extends BaseFixedWidthVector {
    * @param value   value of element
    */
   public void set(int index, double value) {
-    BitVectorHelper.setValidityBitToOne(validityBuffer, index);
+    markValidityBitToOne(index);
     setValue(index, value);
   }
 
@@ -190,7 +190,7 @@ public class Float8Vector extends BaseFixedWidthVector {
     if (holder.isSet < 0) {
       throw new IllegalArgumentException();
     } else if (holder.isSet > 0) {
-      BitVectorHelper.setValidityBitToOne(validityBuffer, index);
+      markValidityBitToOne(index);
       setValue(index, holder.value);
     } else {
       BitVectorHelper.setValidityBit(validityBuffer, index, 0);
@@ -204,7 +204,7 @@ public class Float8Vector extends BaseFixedWidthVector {
    * @param holder  data holder for value of element
    */
   public void set(int index, Float8Holder holder) {
-    BitVectorHelper.setValidityBitToOne(validityBuffer, index);
+    markValidityBitToOne(index);
     setValue(index, holder.value);
   }
 

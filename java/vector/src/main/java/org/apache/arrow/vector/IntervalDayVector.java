@@ -218,7 +218,7 @@ public class IntervalDayVector extends BaseFixedWidthVector {
    * @param value   value of element
    */
   public void set(int index, ArrowBuf value) {
-    BitVectorHelper.setValidityBitToOne(validityBuffer, index);
+    markValidityBitToOne(index);
     valueBuffer.setBytes(index * TYPE_WIDTH, value, 0, TYPE_WIDTH);
   }
 
@@ -231,7 +231,7 @@ public class IntervalDayVector extends BaseFixedWidthVector {
    */
   public void set(int index, int days, int milliseconds) {
     final int offsetIndex = index * TYPE_WIDTH;
-    BitVectorHelper.setValidityBitToOne(validityBuffer, index);
+    markValidityBitToOne(index);
     valueBuffer.setInt(offsetIndex, days);
     valueBuffer.setInt((offsetIndex + MILLISECOND_OFFSET), milliseconds);
   }
