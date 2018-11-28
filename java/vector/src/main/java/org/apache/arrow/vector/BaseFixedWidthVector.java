@@ -177,7 +177,7 @@ public abstract class BaseFixedWidthVector extends BaseValueVector
    */
   @Override
   public int getValueCapacity() {
-    final int validityBufferCapacity = (int) (getValidityBufferCapacity() * 8L);
+    final int validityBufferCapacity = getValidityBufferValueCapacity();
     final int valueBufferCapacity = (int) ((valueBuffer.capacity() * 1.0) / typeWidth);
     return Math.min(valueBufferCapacity, validityBufferCapacity);
   }
