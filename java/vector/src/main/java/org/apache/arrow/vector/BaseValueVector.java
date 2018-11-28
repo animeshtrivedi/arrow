@@ -19,9 +19,13 @@ package org.apache.arrow.vector;
 
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 
+import org.apache.arrow.memory.BaseAllocator;
 import org.apache.arrow.memory.BufferAllocator;
 import org.apache.arrow.util.Preconditions;
+import org.apache.arrow.vector.ipc.message.ArrowFieldNode;
+import org.apache.arrow.vector.util.OversizedAllocationException;
 import org.apache.arrow.vector.util.TransferPair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,9 +42,96 @@ public abstract class BaseValueVector implements ValueVector {
   protected final BufferAllocator allocator;
   protected final String name;
 
+  private ArrowBuf validityBuffer;
+  private int validityAllocationSizeInBytes;
+
   protected BaseValueVector(String name, BufferAllocator allocator) {
     this.allocator = Preconditions.checkNotNull(allocator, "allocator cannot be null");
     this.name = name;
+    this.validityBuffer = this.allocator.getEmpty();
+    this.validityAllocationSizeInBytes = getValidityBufferSizeFromCount(INITIAL_VALUE_ALLOCATION);
+  }
+
+  void loadValidityBuffer(final ArrowFieldNode fieldNode,
+                     final ArrowBuf sourceValidityBuffer,
+                     final BufferAllocator allocator){
+    this.validityBuffer.release();
+    BitVectorHelper.loadValidityBuffer(fieldNode, this.validityBuffer, allocator);
+    //set the count here
+  }
+
+  public int getValidityCapacity(){
+    return this.validityBuffer.capacity();
+  }
+
+  public void add(List<ArrowBuf> list){
+    list.add(this.validityBuffer);
+  }
+
+  public void setReaderIndex(int index){
+    this.validityBuffer.readerIndex(index);
+  }
+
+  public void setWriterIndex(int index){
+    this.validityBuffer.writerIndex(index);
+  }
+
+  public void allocateValidityBuffer(final long size) {
+    final int curSize = (int) size;
+    validityBuffer = allocator.buffer(curSize);
+    validityBuffer.readerIndex(0);
+    validityAllocationSizeInBytes = curSize;
+    validityBuffer.setZero(0, validityBuffer.capacity());
+  }
+
+  public void reallocValidityBuffer() {
+    final int currentBufferCapacity = validityBuffer.capacity();
+    long baseSize = validityAllocationSizeInBytes;
+
+    if (baseSize < (long) currentBufferCapacity) {
+      baseSize = (long) currentBufferCapacity;
+    }
+
+    long newAllocationSize = baseSize * 2L;
+    newAllocationSize = BaseAllocator.nextPowerOfTwo(newAllocationSize);
+    assert newAllocationSize >= 1;
+
+    if (newAllocationSize > MAX_ALLOCATION_SIZE) {
+      throw new OversizedAllocationException("Unable to expand the buffer");
+    }
+
+    final ArrowBuf newBuf = allocator.buffer((int) newAllocationSize);
+    newBuf.setBytes(0, validityBuffer, 0, currentBufferCapacity);
+    newBuf.setZero(currentBufferCapacity, newBuf.capacity() - currentBufferCapacity);
+    validityBuffer.release(1);
+    validityBuffer = newBuf;
+    validityAllocationSizeInBytes = (int) newAllocationSize;
+  }
+
+  public void setValidityAllocationSizeInBytes(int size){
+    this.validityAllocationSizeInBytes = size;
+  }
+
+  public int getValidityAllocationSizeInBytes(){
+    return this.validityAllocationSizeInBytes;
+  }
+
+  public void setValidityBuffer(ArrowBuf validityBuffer){
+    this.validityBuffer = validityBuffer;
+  }
+
+  public ArrowBuf.TransferResult transferOwnership(BufferAllocator newAllocator){
+    return validityBuffer.transferOwnership(newAllocator);
+  }
+
+  @Override
+  final public long getValidityBufferAddress() {
+    return (validityBuffer.memoryAddress());
+  }
+
+  @Override
+  final public ArrowBuf getValidityBuffer() {
+    return validityBuffer;
   }
 
   @Override

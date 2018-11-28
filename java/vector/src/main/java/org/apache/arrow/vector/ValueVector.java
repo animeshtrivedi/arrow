@@ -56,6 +56,7 @@ import io.netty.buffer.ArrowBuf;
  * </blockquote>
  */
 public interface ValueVector extends Closeable, Iterable<ValueVector> {
+
   /**
    * Allocate new buffers. ValueVector implements logic to determine how much to allocate.
    *

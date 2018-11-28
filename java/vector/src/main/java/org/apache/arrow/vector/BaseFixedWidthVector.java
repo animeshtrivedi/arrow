@@ -44,11 +44,11 @@ public abstract class BaseFixedWidthVector extends BaseValueVector
   private final int typeWidth;
 
   protected int valueAllocationSizeInBytes;
-  protected int validityAllocationSizeInBytes;
+  //protected int validityAllocationSizeInBytes;
 
   protected final Field field;
   private int allocationMonitor;
-  protected ArrowBuf validityBuffer;
+  //protected ArrowBuf validityBuffer;
   protected ArrowBuf valueBuffer;
   protected int valueCount;
 
