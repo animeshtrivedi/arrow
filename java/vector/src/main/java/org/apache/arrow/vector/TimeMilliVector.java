@@ -194,7 +194,7 @@ public class TimeMilliVector extends BaseFixedWidthVector {
       markValidityBitToOne(index);
       setValue(index, holder.value);
     } else {
-      BitVectorHelper.setValidityBit(validityBuffer, index, 0);
+      markValidityBitToZero(index);
     }
   }
 
@@ -257,7 +257,7 @@ public class TimeMilliVector extends BaseFixedWidthVector {
     handleSafe(index);
     // not really needed to set the bit to 0 as long as
     // the buffer always starts from 0.
-    BitVectorHelper.setValidityBit(validityBuffer, index, 0);
+    markValidityBitToZero(index);
   }
 
   /**
@@ -271,7 +271,7 @@ public class TimeMilliVector extends BaseFixedWidthVector {
     if (isSet > 0) {
       set(index, value);
     } else {
-      BitVectorHelper.setValidityBit(validityBuffer, index, 0);
+      markValidityBitToZero(index);
     }
   }
 

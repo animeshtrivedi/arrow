@@ -427,7 +427,7 @@ public class FixedSizeListVector extends BaseValueVector implements FieldVector,
     while (index >= getValidityBufferValueCapacity()) {
       reallocValidityBuffer();
     }
-    BitVectorHelper.setValidityBit(validityBuffer, index, 0);
+    markValidityBitToZero(index);
   }
 
   public void setNotNull(int index) {

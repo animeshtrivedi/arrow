@@ -141,7 +141,7 @@ public class TimeStampNanoVector extends TimeStampVector {
       markValidityBitToOne(index);
       setValue(index, holder.value);
     } else {
-      BitVectorHelper.setValidityBit(validityBuffer, index, 0);
+      markValidityBitToZero(index);
     }
   }
 
