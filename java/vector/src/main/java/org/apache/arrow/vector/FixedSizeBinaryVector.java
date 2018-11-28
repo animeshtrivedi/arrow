@@ -199,7 +199,7 @@ public class FixedSizeBinaryVector extends BaseFixedWidthVector {
     if (isSet > 0) {
       set(index, value);
     } else {
-      BitVectorHelper.setValidityBit(validityBuffer, index, 0);
+      markValidityBitToZero(index);
     }
   }
 
@@ -244,7 +244,7 @@ public class FixedSizeBinaryVector extends BaseFixedWidthVector {
     if (isSet > 0) {
       set(index, buffer);
     } else {
-      BitVectorHelper.setValidityBit(validityBuffer, index, 0);
+      markValidityBitToZero(index);
     }
   }
 
@@ -300,7 +300,7 @@ public class FixedSizeBinaryVector extends BaseFixedWidthVector {
     } else if (holder.isSet > 0) {
       set(index, holder.buffer);
     } else {
-      BitVectorHelper.setValidityBit(validityBuffer, index, 0);
+      markValidityBitToZero(index);
     }
   }
 
@@ -319,7 +319,7 @@ public class FixedSizeBinaryVector extends BaseFixedWidthVector {
 
   public void setNull(int index) {
     handleSafe(index);
-    BitVectorHelper.setValidityBit(validityBuffer, index, 0);
+    markValidityBitToZero(index);
   }
 
   /**
