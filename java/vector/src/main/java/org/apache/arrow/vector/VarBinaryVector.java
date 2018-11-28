@@ -157,7 +157,7 @@ public class VarBinaryVector extends BaseVariableWidthVector {
     final int end = from.offsetBuffer.getInt((fromIndex + 1) * OFFSET_WIDTH);
     final int length = end - start;
     fillHoles(thisIndex);
-    BitVectorHelper.setValidityBit(this.validityBuffer, thisIndex, from.isSet(fromIndex));
+    setValidityBit(thisIndex, from.isSet(fromIndex));
     final int copyStart = offsetBuffer.getInt(thisIndex * OFFSET_WIDTH);
     from.valueBuffer.getBytes(start, this.valueBuffer, copyStart, length);
     offsetBuffer.setInt((thisIndex + 1) * OFFSET_WIDTH, copyStart + length);
@@ -178,7 +178,7 @@ public class VarBinaryVector extends BaseVariableWidthVector {
     final int length = end - start;
     handleSafe(thisIndex, length);
     fillHoles(thisIndex);
-    BitVectorHelper.setValidityBit(this.validityBuffer, thisIndex, from.isSet(fromIndex));
+    setValidityBit(thisIndex, from.isSet(fromIndex));
     final int copyStart = offsetBuffer.getInt(thisIndex * OFFSET_WIDTH);
     from.valueBuffer.getBytes(start, this.valueBuffer, copyStart, length);
     offsetBuffer.setInt((thisIndex + 1) * OFFSET_WIDTH, copyStart + length);
