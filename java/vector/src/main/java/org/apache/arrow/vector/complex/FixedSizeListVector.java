@@ -517,7 +517,7 @@ public class FixedSizeListVector extends BaseValueVector implements FieldVector,
         to.reAlloc();
       }
       //BitVectorHelper.setValidityBit(to.validityBuffer, toIndex, isSet(fromIndex));
-      setValidityBit(toIndex, isSet(fromIndex));
+      to.setValidityBit(toIndex, isSet(fromIndex));
       int fromOffset = fromIndex * listSize;
       int toOffset = toIndex * listSize;
       for (int i = 0; i < listSize; i++) {
