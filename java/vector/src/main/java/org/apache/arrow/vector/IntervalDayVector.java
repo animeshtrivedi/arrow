@@ -185,7 +185,7 @@ public class IntervalDayVector extends BaseFixedWidthVector {
    * @param from source vector
    */
   public void copyFrom(int fromIndex, int thisIndex, IntervalDayVector from) {
-    BitVectorHelper.setValidityBit(validityBuffer, thisIndex, from.isSet(fromIndex));
+    setValidityBit(thisIndex, from.isSet(fromIndex));
     from.valueBuffer.getBytes(fromIndex * TYPE_WIDTH, this.valueBuffer,
               thisIndex * TYPE_WIDTH, TYPE_WIDTH);
   }

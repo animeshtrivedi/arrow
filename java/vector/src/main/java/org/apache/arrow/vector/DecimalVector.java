@@ -152,7 +152,7 @@ public class DecimalVector extends BaseFixedWidthVector {
    * @param from source vector
    */
   public void copyFrom(int fromIndex, int thisIndex, DecimalVector from) {
-    BitVectorHelper.setValidityBit(validityBuffer, thisIndex, from.isSet(fromIndex));
+    setValidityBit(thisIndex, from.isSet(fromIndex));
     from.valueBuffer.getBytes(fromIndex * TYPE_WIDTH, valueBuffer,
             thisIndex * TYPE_WIDTH, TYPE_WIDTH);
   }

@@ -106,7 +106,7 @@ public class UInt8Vector extends BaseFixedWidthVector {
   }
 
   public void copyFrom(int fromIndex, int thisIndex, UInt8Vector from) {
-    BitVectorHelper.setValidityBit(validityBuffer, thisIndex, from.isSet(fromIndex));
+    setValidityBit(thisIndex, from.isSet(fromIndex));
     final long value = from.valueBuffer.getLong(fromIndex * TYPE_WIDTH);
     valueBuffer.setLong(thisIndex * TYPE_WIDTH, value);
   }

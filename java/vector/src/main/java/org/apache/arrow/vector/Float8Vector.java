@@ -137,7 +137,7 @@ public class Float8Vector extends BaseFixedWidthVector {
    * @param from source vector
    */
   public void copyFrom(int fromIndex, int thisIndex, Float8Vector from) {
-    BitVectorHelper.setValidityBit(validityBuffer, thisIndex, from.isSet(fromIndex));
+    setValidityBit(thisIndex, from.isSet(fromIndex));
     final double value = from.valueBuffer.getDouble(fromIndex * TYPE_WIDTH);
     valueBuffer.setDouble(thisIndex * TYPE_WIDTH, value);
   }

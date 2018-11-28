@@ -153,7 +153,7 @@ public class FixedSizeBinaryVector extends BaseFixedWidthVector {
    * @param from      source vector
    */
   public void copyFrom(int fromIndex, int thisIndex, FixedSizeBinaryVector from) {
-    BitVectorHelper.setValidityBit(validityBuffer, thisIndex, from.isSet(fromIndex));
+    setValidityBit(thisIndex, from.isSet(fromIndex));
     from.valueBuffer.getBytes(fromIndex * byteWidth, valueBuffer,
         thisIndex * byteWidth, byteWidth);
   }

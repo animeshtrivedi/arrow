@@ -137,7 +137,7 @@ public class Float4Vector extends BaseFixedWidthVector {
    * @param from source vector
    */
   public void copyFrom(int fromIndex, int thisIndex, Float4Vector from) {
-    BitVectorHelper.setValidityBit(validityBuffer, thisIndex, from.isSet(fromIndex));
+    setValidityBit(thisIndex, from.isSet(fromIndex));
     final float value = from.valueBuffer.getFloat(fromIndex * TYPE_WIDTH);
     valueBuffer.setFloat(thisIndex * TYPE_WIDTH, value);
   }

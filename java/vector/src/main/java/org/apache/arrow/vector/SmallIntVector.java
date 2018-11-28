@@ -137,7 +137,7 @@ public class SmallIntVector extends BaseFixedWidthVector {
    * @param from source vector
    */
   public void copyFrom(int fromIndex, int thisIndex, SmallIntVector from) {
-    BitVectorHelper.setValidityBit(validityBuffer, thisIndex, from.isSet(fromIndex));
+    setValidityBit(thisIndex, from.isSet(fromIndex));
     final short value = from.valueBuffer.getShort(fromIndex * TYPE_WIDTH);
     valueBuffer.setShort(thisIndex * TYPE_WIDTH, value);
   }
