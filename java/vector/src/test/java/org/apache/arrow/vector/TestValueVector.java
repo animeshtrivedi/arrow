@@ -1866,7 +1866,8 @@ public class TestValueVector {
   public static void setBytes(int index, byte[] bytes, VarCharVector vector) {
     final int currentOffset = vector.offsetBuffer.getInt(index * vector.OFFSET_WIDTH);
 
-    BitVectorHelper.setValidityBitToOne(vector.validityBuffer, index);
+    //BitVectorHelper.setValidityBitToOne(vector.validityBuffer, index);
+    vector.markValidityBitToOne(index);
     vector.offsetBuffer.setInt((index + 1) * vector.OFFSET_WIDTH, currentOffset + bytes.length);
     vector.valueBuffer.setBytes(currentOffset, bytes, 0, bytes.length);
   }
