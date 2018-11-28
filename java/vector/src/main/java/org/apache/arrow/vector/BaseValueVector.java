@@ -44,6 +44,7 @@ public abstract class BaseValueVector implements ValueVector {
 
   private ArrowBuf validityBuffer;
   private int validityAllocationSizeInBytes;
+  private int nullCount;
 
   protected BaseValueVector(String name, BufferAllocator allocator) {
     this.allocator = Preconditions.checkNotNull(allocator, "allocator cannot be null");
@@ -58,7 +59,7 @@ public abstract class BaseValueVector implements ValueVector {
     this.validityBuffer.release();
     this.validityBuffer = BitVectorHelper.loadValidityBuffer(fieldNode, bitBuffer, allocator);
     validityAllocationSizeInBytes = validityBuffer.capacity();
-    //TODO: mark the null count
+    this.nullCount = 0;
   }
 
   public int getValidityBufferCapacity(){
@@ -302,8 +303,7 @@ public abstract class BaseValueVector implements ValueVector {
    */
   @Override
   final public int getNullCount() {
-    return -1;
-    //return BitVectorHelper.getNullCount(validityBuffer, valueCount);
+    return BitVectorHelper.getNullCount(validityBuffer, getValueCount());
   }
 
   final public void markValidityBitToOne(int index){
