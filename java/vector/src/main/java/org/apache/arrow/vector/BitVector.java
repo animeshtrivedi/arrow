@@ -509,7 +509,7 @@ public class BitVector extends BaseFixedWidthVector {
       // fill in one full byte at a time
       for (int i = startByteIndex; i < endByteIndex; i++) {
         //validityBuffer.setByte(i, 0xFF);
-        setBitMaskedByte(startByteIndex, (byte) 0xFF);
+        setBitMaskedByte(i, (byte) 0xFF);
         valueBuffer.setByte(i, 0xFF);
       }
 
