@@ -84,6 +84,7 @@ public class ListVector extends BaseRepeatedValueVector implements FieldVector, 
     this.fieldType = checkNotNull(fieldType);
     this.callBack = callBack;
     //this.validityAllocationSizeInBytes = getValidityBufferSizeFromCount(INITIAL_VALUE_ALLOCATION);
+    setValidityAllocationSizeInBytes(getValidityBufferSizeFromCount(INITIAL_VALUE_ALLOCATION));
     this.lastSet = 0;
   }
 
@@ -178,7 +179,7 @@ public class ListVector extends BaseRepeatedValueVector implements FieldVector, 
     offsetBuffer.release();
     offsetBuffer = offBuffer.retain(allocator);
 
-    setValidityAllocationSizeInBytes(getValueCapacity());//validityAllocationSizeInBytes = getValueCapacity();//validityBuffer.capacity();
+    setValidityAllocationSizeInBytes(getValidityBufferCapacity());//validityAllocationSizeInBytes = getValueCapacity();//validityBuffer.capacity();
     offsetAllocationSizeInBytes = offsetBuffer.capacity();
 
     lastSet = fieldNode.getLength();
