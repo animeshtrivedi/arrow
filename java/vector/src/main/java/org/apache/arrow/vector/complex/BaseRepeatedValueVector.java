@@ -306,10 +306,6 @@ public abstract class BaseRepeatedValueVector extends BaseValueVector implements
             offsetBuffer.getInt(index * OFFSET_WIDTH);
   }
 
-  public boolean isNull(int index) {
-    return false;
-  }
-
   public boolean isEmpty(int index) {
     return false;
   }

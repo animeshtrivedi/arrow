@@ -279,7 +279,7 @@ public abstract class BaseValueVector implements ValueVector {
    * @return true if element at given index is null, false otherwise
    */
   @Override
-  public boolean isNull(int index) {
+  final public boolean isNull(int index) {
     return (isSet(index) == 0);
   }
 
